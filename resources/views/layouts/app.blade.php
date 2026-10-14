@@ -12,7 +12,7 @@
 <body class="bg-light d-flex flex-column min-vh-100">
     @include('partials.header')
 
-    <main class="container flex-grow-1">
+    <main class="flex-grow-1">
         @yield('content')
     </main>
 
