@@ -11,6 +11,7 @@ Route::get('/', function () {
 
 Route::get('/profile', [MahasiswaController::class, 'index']);
 Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
+Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
 Route::get('/project/{id}', [ProjectController::class, 'show'])->name('project.show');
 
 Route::get('/about', function () {

@@ -10,13 +10,17 @@
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
-    @include('partials.header')
+    @unless(isset($hideLayoutShell) && $hideLayoutShell)
+        @include('partials.header')
+    @endunless
 
     <main class="flex-grow-1">
         @yield('content')
     </main>
 
-    @include('partials.footer')
+    @unless(isset($hideLayoutShell) && $hideLayoutShell)
+        @include('partials.footer')
+    @endunless
 </body>
 
 </html>
