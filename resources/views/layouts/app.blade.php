@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Profil Mahasiswa')</title>
     <link rel="stylesheet" href="{{ asset('bootstrap-5.3.8-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script src="{{ asset('bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
 </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="bg-light d-flex flex-column min-vh-100 {{ ($hideLayoutShell ?? false) ? 'admin-body' : '' }}">
     @unless(isset($hideLayoutShell) && $hideLayoutShell)
         @include('partials.header')
     @endunless

@@ -5,66 +5,68 @@
 @section('content')
 @include('partials.admin-header')
 
-<div class="admin-dashboard">
-    <main class="admin-content">
-        <header class="admin-topbar">
-            <div>
-                <p class="admin-topbar__eyebrow">Admin Menu</p>
-                <h1>Tambah Project</h1>
-            </div>
+<div class="admin-layout">
+    @include('partials.admin-sidebar')
 
-            <div class="admin-topbar__actions">
-                <span class="admin-campus">Prodi Sistem Informasi UNPAM</span>
-            </div>
-        </header>
-
-        <section class="admin-panel admin-form-panel">
-            <form class="project-form">
-                <div class="form-grid">
-                    <div class="field-group field-full">
-                        <label for="project-title">Title</label>
-                        <input id="project-title" type="text" placeholder="Masukkan judul project" />
-                    </div>
-
-                    <div class="field-group">
-                        <label for="project-technology">Teknologi</label>
-                        <input id="project-technology" type="text" placeholder="Contoh: Laravel, React, Node.js" />
-                    </div>
-
-                    <div class="field-group">
-                        <label for="project-status">Status</label>
-                        <select id="project-status">
-                            <option value="active">Active</option>
-                            <option value="draft">Draft</option>
-                            <option value="archived">Archived</option>
-                        </select>
-                    </div>
-
-                    <div class="field-group field-full">
-                        <label for="project-desc">Description</label>
-                        <textarea id="project-desc" rows="5" placeholder="Masukkan deskripsi project"></textarea>
-                    </div>
-
-                    <div class="field-group field-full">
-                        <label for="project-image">Image</label>
-                        <input id="project-image" type="file" />
-                    </div>
+    <div class="admin-main">
+        <main class="admin-content admin-dashboard">
+            <header class="admin-topbar">
+                <div>
+                    <p class="admin-topbar__eyebrow">Admin Menu</p>
+                    <h1>Tambah Project</h1>
                 </div>
 
-                <div class="form-actions">
-                    <button type="submit" class="btn admin-btn-primary">Simpan</button>
-                    <a href="{{ route('project.index') }}" class="btn admin-btn-secondary">Batal</a>
+                <div class="admin-topbar__actions">
+                    <span class="admin-campus">Prodi Sistem Informasi UNPAM</span>
                 </div>
-            </form>
-        </section>
-    </main>
-</div>
+            </header>
 
-<footer class="admin-footer">
-    <div class="container-fluid px-3">
-        <span>2026 MyProfile All rights reserved</span>
+            <section class="admin-panel admin-form-panel">
+                <form class="project-form">
+                    <div class="form-grid">
+                        <div class="field-group field-full">
+                            <label for="project-title">Title</label>
+                            <input id="project-title" type="text" placeholder="Masukkan judul project" />
+                        </div>
+
+                        <div class="field-group">
+                            <label for="project-technology">Teknologi</label>
+                            <input id="project-technology" type="text" placeholder="Contoh: Laravel, React, Node.js" />
+                        </div>
+
+                        <div class="field-group">
+                            <label for="project-status">Status</label>
+                            <select id="project-status">
+                                <option value="active">Active</option>
+                                <option value="draft">Draft</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group field-full">
+                            <label for="project-desc">Description</label>
+                            <textarea id="project-desc" rows="5" placeholder="Masukkan deskripsi project"></textarea>
+                        </div>
+
+                        <div class="field-group field-full">
+                            <label for="project-image">Image</label>
+                            <input id="project-image" type="file" />
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn admin-btn-primary">Simpan</button>
+                        <a href="{{ route('project.index') }}" class="btn admin-btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <footer class="admin-footer">
+            <span>&copy; {{ date('Y') }} MyProfile. All rights reserved.</span>
+        </footer>
     </div>
-</footer>
+</div>
 
 <style>
     body {

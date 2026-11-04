@@ -1,5 +1,5 @@
 <header class="unp-admin-header">
-    <a class="unpam-brand" href="{{ route('project.index') }}" aria-label="Universitas Pamulang, Sistem Informasi">
+    <a class="unpam-brand" href="{{ route('admin.dashboard') }}" aria-label="Universitas Pamulang, Sistem Informasi">
         <img src="{{ asset('images/unpam-logo.png') }}" alt="" class="unpam-brand__logo">
         <span class="unpam-brand__name">
             <span>UNIVERSITAS PAMULANG</span>
@@ -8,8 +8,12 @@
     </a>
 
     <nav class="unp-admin-nav" aria-label="Admin navigation">
-        <a href="{{ route('project.index') }}">Dashboard</a>
-        <span>Logout</span>
+        <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+        <span class="unp-admin-nav__user">{{ auth()->user()->name }}</span>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit">Logout</button>
+        </form>
     </nav>
 </header>
 
@@ -22,7 +26,7 @@
         width: 100%;
         height: 40px;
         padding: 0 14px;
-        background: #ffbf00;
+        background: var(--admin-yellow);
         font-family: Arial, sans-serif;
     }
 
@@ -68,8 +72,21 @@
         text-decoration: none;
     }
 
-    .unp-admin-nav a:hover {
+    .unp-admin-nav a:hover,
+    .unp-admin-nav button:hover {
         color: #fff;
+    }
+
+    .unp-admin-nav form {
+        margin: 0;
+    }
+
+    .unp-admin-nav button {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
     }
 
     @media (max-width: 480px) {

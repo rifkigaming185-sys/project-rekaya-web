@@ -5,83 +5,85 @@
 @section('content')
 @include('partials.admin-header')
 
-<div class="admin-dashboard">
-    <main class="admin-content">
-        <header class="admin-topbar">
-            <div>
-                <p class="admin-topbar__eyebrow">Admin Menu</p>
-                <h1>Data Project</h1>
-            </div>
+<div class="admin-layout">
+    @include('partials.admin-sidebar')
 
-            <div class="admin-topbar__actions">
-                <span class="admin-campus">Prodi Sistem Informasi UNPAM</span>
-                <a href="{{ route('project.create') }}" class="btn admin-btn-primary">Tambah Project</a>
-            </div>
-        </header>
-
-        <section class="admin-panel">
-            <div class="admin-table-tools">
-                <div class="admin-search-wrap">
-                    <label for="project-search" class="visually-hidden">Search</label>
-                    <input id="project-search" type="search" placeholder="Search:" />
+    <div class="admin-main">
+        <main class="admin-content admin-dashboard">
+            <header class="admin-topbar">
+                <div>
+                    <p class="admin-topbar__eyebrow">Admin Menu</p>
+                    <h1>Data Project</h1>
                 </div>
-                <button type="button" class="btn admin-btn-secondary">Search</button>
-            </div>
 
-            <div class="table-responsive">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Teknologi</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($projects as $project)
-                            @php
-                                $statusClass = match (strtolower($project->status ?? 'active')) {
-                                    'active' => 'status-active',
-                                    'archived' => 'status-archived',
-                                    'draft' => 'status-draft',
-                                    default => 'status-active',
-                                };
-                            @endphp
+                <div class="admin-topbar__actions">
+                    <span class="admin-campus">Prodi Sistem Informasi UNPAM</span>
+                    <a href="{{ route('project.create') }}" class="btn admin-btn-primary">Tambah Project</a>
+                </div>
+            </header>
+
+            <section class="admin-panel">
+                <div class="admin-table-tools">
+                    <div class="admin-search-wrap">
+                        <label for="project-search" class="visually-hidden">Search</label>
+                        <input id="project-search" type="search" placeholder="Search:" />
+                    </div>
+                    <button type="button" class="btn admin-btn-secondary">Search</button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
                             <tr>
-                                <td class="project-title-cell">{{ $project->title }}</td>
-                                <td>{{ $project->teknologi }}</td>
-                                <td class="project-description-cell">{{ Str::limit($project->description, 110) }}</td>
-                                <td>
-                                    <span class="status-badge {{ $statusClass }}">{{ ucfirst($project->status ?? 'active') }}</span>
-                                </td>
-                                <td class="action-cell">
-                                    <a href="{{ route('project.show', $project->id) }}" class="btn btn-table btn-table--view">Detail</a>
-                                    <button type="button" class="btn btn-table btn-table--danger">Hapus</button>
-                                </td>
+                                <th>Title</th>
+                                <th>Teknologi</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="empty-state">Belum ada project.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @forelse ($projects as $project)
+                                @php
+                                    $statusClass = match (strtolower($project->status ?? 'active')) {
+                                        'active' => 'status-active',
+                                        'archived' => 'status-archived',
+                                        'draft' => 'status-draft',
+                                        default => 'status-active',
+                                    };
+                                @endphp
+                                <tr>
+                                    <td class="project-title-cell">{{ $project->title }}</td>
+                                    <td>{{ $project->teknologi }}</td>
+                                    <td class="project-description-cell">{{ Str::limit($project->description, 110) }}</td>
+                                    <td>
+                                        <span class="status-badge {{ $statusClass }}">{{ ucfirst($project->status ?? 'active') }}</span>
+                                    </td>
+                                    <td class="action-cell">
+                                        <a href="{{ route('project.show', $project->id) }}" class="btn btn-table btn-table--view">Detail</a>
+                                        <button type="button" class="btn btn-table btn-table--danger">Hapus</button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="empty-state">Belum ada project.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
-            <div class="admin-pagination">
-                {{ $projects->links('pagination::bootstrap-5') }}
-            </div>
-        </section>
-    </main>
-</div>
+                <div class="admin-pagination">
+                    {{ $projects->links('pagination::bootstrap-5') }}
+                </div>
+            </section>
+        </main>
 
-<footer class="admin-footer">
-    <div class="container-fluid px-3">
-        <span>2026 MyProfile All rights reserved</span>
+        <footer class="admin-footer">
+            <span>&copy; {{ date('Y') }} MyProfile. All rights reserved.</span>
+        </footer>
     </div>
-</footer>
+</div>
 
 <style>
     body {
