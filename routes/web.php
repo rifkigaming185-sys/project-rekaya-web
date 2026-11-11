@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
         return view('page.admin-dashboard')->with('hideLayoutShell', true);
     })->name('admin.dashboard');
     Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/project/pdf', [ProjectController::class, 'pdf'])->name('project.pdf');
     Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
 });
 

@@ -19,22 +19,35 @@
                 <div class="admin-topbar__actions">
                     <span class="admin-campus">Prodi Sistem Informasi UNPAM</span>
                     <a href="{{ route('project.create') }}" class="btn admin-btn-primary">Tambah Project</a>
+                    <a href="{{ route('project.pdf') }}" class="btn admin-btn-pdf" target="_blank" rel="noopener">Cetak PDF</a>
                 </div>
             </header>
 
             <section class="admin-panel">
-                <div class="admin-table-tools">
+                <form class="admin-table-tools" method="GET" action="{{ route('project.index') }}">
+                    <label class="admin-entries-control" for="project-per-page">
+                        Show
+                        <select id="project-per-page" name="per_page" onchange="this.form.submit()">
+                            @foreach ([10, 25, 50, 100] as $pageSize)
+                                <option value="{{ $pageSize }}" @selected($perPage === $pageSize)>{{ $pageSize }}</option>
+                            @endforeach
+                        </select>
+                        entries
+                    </label>
+
                     <div class="admin-search-wrap">
-                        <label for="project-search" class="visually-hidden">Search</label>
-                        <input id="project-search" type="search" placeholder="Search:" />
+                        <label for="project-search">Search:</label>
+                        <input id="project-search" name="search" type="search" value="{{ $search }}" />
+                        <button type="submit" class="btn admin-btn-secondary">Cari</button>
                     </div>
-                    <button type="button" class="btn admin-btn-secondary">Search</button>
-                </div>
+                </form>
 
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
                             <tr>
+                                <th>No</th>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Teknologi</th>
                                 <th>Description</th>
@@ -53,6 +66,14 @@
                                     };
                                 @endphp
                                 <tr>
+                                    <td>{{ $projects->firstItem() + $loop->index }}</td>
+                                    <td>
+                                        @if ($project->image)
+                                            <img class="project-thumbnail" src="{{ asset('images/' . $project->image) }}" alt="Gambar {{ $project->title }}">
+                                        @else
+                                            <span aria-label="Tidak ada gambar">—</span>
+                                        @endif
+                                    </td>
                                     <td class="project-title-cell">{{ $project->title }}</td>
                                     <td>{{ $project->teknologi }}</td>
                                     <td class="project-description-cell">{{ Str::limit($project->description, 110) }}</td>
@@ -66,7 +87,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="empty-state">Belum ada project.</td>
+                                    <td colspan="7" class="empty-state">Belum ada project.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -156,19 +177,33 @@
         font-weight: 700;
     }
 
-    .admin-btn-primary {
-        border: 0;
-        background: linear-gradient(135deg, #f59e0b, #ed8d00);
+    .admin-layout .admin-btn-primary {
+        border: 1px solid #0d6efd;
+        background: #0d6efd;
         color: #fff;
-        padding: 0.72rem 1.2rem;
-        border-radius: 10px;
+        padding: 0.55rem 0.8rem;
+        border-radius: 4px;
         font-weight: 700;
-        box-shadow: 0 12px 20px rgba(245, 158, 11, 0.2);
+        box-shadow: none;
     }
 
-    .admin-btn-primary:hover {
+    .admin-layout .admin-btn-primary:hover {
+        border-color: #0b5ed7;
+        background: #0b5ed7;
         color: #fff;
-        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .admin-btn-pdf {
+        border: 1px solid #dc3545;
+        border-radius: 4px;
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .admin-btn-pdf:hover {
+        border-color: #bb2d3b;
+        background: #bb2d3b;
+        color: #fff;
     }
 
     .admin-panel {
@@ -187,27 +222,44 @@
         margin-bottom: 14px;
     }
 
+    .admin-entries-control,
     .admin-search-wrap {
-        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #343a40;
+        font-size: 0.9rem;
     }
 
     .admin-search-wrap input {
-        width: 100%;
-        max-width: 260px;
-        padding: 0.7rem 0.9rem;
-        border: 1px solid rgba(148, 163, 184, 0.5);
-        border-radius: 10px;
-        background: #f9fafb;
-        color: #1f2937;
+        width: 160px;
+        padding: 0.35rem 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background: #fff;
+        color: #212529;
+    }
+
+    .admin-entries-control select {
+        padding: 0.3rem 0.4rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background: #fff;
     }
 
     .admin-btn-secondary {
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        background: #eff6ff;
-        color: #1d4ed8;
-        padding: 0.7rem 1rem;
-        border-radius: 10px;
+        border: 1px solid #0d6efd;
+        background: #0d6efd;
+        color: #fff;
+        padding: 0.35rem 0.65rem;
+        border-radius: 4px;
         font-weight: 700;
+    }
+
+    .admin-btn-secondary:hover {
+        border-color: #0b5ed7;
+        background: #0b5ed7;
+        color: #fff;
     }
 
     .table-responsive {
@@ -240,6 +292,15 @@
     .project-title-cell {
         font-weight: 700;
         color: #0f172a;
+    }
+
+    .project-thumbnail {
+        display: block;
+        width: 64px;
+        height: 64px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        object-fit: cover;
     }
 
     .project-description-cell {
@@ -340,12 +401,16 @@
         }
 
         .admin-table-tools {
-            flex-direction: column;
-            align-items: stretch;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .admin-search-wrap {
+            margin-left: auto;
         }
 
         .admin-search-wrap input {
-            max-width: 100%;
+            width: min(38vw, 160px);
         }
     }
 </style>
